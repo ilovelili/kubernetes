@@ -1,20 +1,16 @@
 package: github.com/ilovelili/micro-consul
 import:
-- package: github.com/golang/protobuf
-  version: ^1.1.0
+- package: github.com/golang/protobuf  
   subpackages:
   - proto
-- package: github.com/micro/go-micro
-  version: ^0.8.0
+- package: github.com/micro/go-micro  
   subpackages:
   - client
   - server
-- package: github.com/micro/kubernetes
-  version: ^0.1.0
+- package: github.com/micro/kubernetes  
   subpackages:
   - go/micro
 - package: golang.org/x/net
   subpackages:
   - context
 - package: google.golang.org/grpc
-  version: ^1.12.0
