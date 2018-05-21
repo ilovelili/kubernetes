@@ -6,7 +6,7 @@ RUN apk update && apk add git
 # Installing Go dependencies
 RUN go get github.com/Masterminds/glide
 
-ENV SRC_DIR=/go/src/github.com/ilovelili/micro-k8s
+ENV SRC_DIR=/go/src/github.com/ilovelili/micro-consul
 WORKDIR $SRC_DIR
 
 # Copying files
@@ -17,5 +17,5 @@ RUN glide up
 
 RUN go build
 
-ENTRYPOINT [ "./micro-k8s" ]
+ENTRYPOINT [ "./micro-consul" ]
 
