@@ -4,9 +4,9 @@ import (
 	"context"
 	"log"
 
-	hello "github.com/ilovelili/micro-consul/proto"
+	hello "github.com/ilovelili/micro-k8s/proto"
 	micro "github.com/micro/go-micro"
-	// k8s "github.com/micro/kubernetes/go/micro"
+	k8s "github.com/micro/kubernetes/go/micro"
 )
 
 // Say say
@@ -20,8 +20,8 @@ func (s *Say) Hello(ctx context.Context, req *hello.Request, rsp *hello.Response
 }
 
 func main() {
-	service := micro.NewService(
-		micro.Name("go.micro.api.greeter"),
+	service := k8s.NewService(
+		micro.Name("default.greeter-api"),
 	)
 
 	service.Init()
