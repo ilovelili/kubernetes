@@ -1,8 +1,4 @@
 version: '2'
 services:
-  service.greeter:
-    build:
-      dockerfile: ./dockerfile
-      context: ./
-    image: greeter-api
-      
+  service.greeter:    
+    image: ilovelili/greeter-api
