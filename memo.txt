@@ -77,7 +77,7 @@ kubectl get deployments --selector="env in (test,prod)"
 ## node ports
 # NodePorts, which enhance a service even further. In addition to a cluster IP, the system picks a port (or the user
 # can specify one), and every node in the cluster then forwards traffic to that port to the service.
-kubectl expose deployment kuard --type=NodePort
+kubectl expose deployment kuard --type=NodePort --port=8888
 
 # update the service
 kubectl edit service kuard
