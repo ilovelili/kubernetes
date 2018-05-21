@@ -14,8 +14,7 @@ spec:
     spec:
         containers:
         - name: greeter-api-service
-          image: greeter-api:latest
-          imagePullPolicy: Always
+          image: ilovelili/greeter-api:latest
           command: [
             "./micro-k8s",
             "--selector=static", # The static selector offloads load balancing to k8s services
