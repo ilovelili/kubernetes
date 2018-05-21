@@ -1,0 +1,119 @@
+kubectl config view
+
+# change the default namespace more permanently
+kubectl config set-context my-context --namespace=playground
+kubectl config use-context my-context
+
+## Pod 
+# A pod represents a collection of application containers and volumes running in the
+# same execution environment. Pods, not containers, are the smallest deployable
+# artifact in a Kubernetes cluster. This means all of the containers in a Pod always land
+# on the same machine.
+
+# The simplest way to create a Pod is via the imperative kubectl run command. 
+# For example, to run our same kuard server, use:
+kubectl run kuard --image=gcr.io/kuar-demo/kuard-amd64:1
+kubectl get pods
+
+# delete the deployment
+kubectl delete deployments/kuard
+
+# apply manifest
+kubectl apply -f kuard-pod.yml
+
+# describe
+kubectl describe pods kuard
+
+# simplest way to access a pod is thru port-forwarding
+kubectl port-forward kuard 8080:8080
+
+# run command inside container using exec
+kubectl exec kuard date
+
+## healthcheck
+# Kubernetes automatically does the healthcheck using a process healthcheck
+# However, in most cases, a simple process check is insufficient. For example, if your
+# process has deadlocked and is unable to serve requests, a process health check will
+# still believe that your application is healthy since its process is still running.
+# To address this, Kubernetes introduced health checks for application liveness.
+# Liveness health checks run application-specific logic (e.g., loading a web page) to
+# verify that the application is not just still running
+
+# check livenessProbe node in kuard-pod-healthcheck.yml (meanwhile we have readinessProbe as well)
+
+## resource management
+# check resource node in kuard-pod-resource.yml
+
+## volumes
+# check spec.volumes and volumeMounts node in kuard-pod-volume.yml
+# when to use volumes:
+# . communication / sync: two containers used a shared volume to communicate and sync data
+# . cache to survive a container restart due to a health check failure
+# . persist data
+
+# persist data using remote disks (nfs)
+volumes:
+- name: "kuard-data"
+  nfs:
+    server: my.nfs.server.local
+    path: "/exports"
+
+# label selectors
+# labels are simple key value pairs like "env=test"
+kubectl label deployments kuard "env=test"
+
+kubectl get deployments --show-labels
+kubectl get deployments --selector="env in (test,prod)"
+
+## service
+# service discovery in Kubernetes starts with a Service object. Use `kubectl expose` to create a service.
+# kubenetes solves DNS service descovery by providing a virtual IP called cluster IP. This
+# is a special IP address the system will load-balance across all of the pods that are identified by the selector. 
+# Kubernetes DNS service was installed as a system component when the cluster was first created. 
+# The DNS service is, itself, managed by Kubernetes and is a great example of Kubernetes building on Kubernetes. 
+# The Kubernetes DNS service provides DNS names for cluster IPs.
+# Cluster ip stable. It will never change without deleting and recreating the service 
+
+## node ports
+# NodePorts, which enhance a service even further. In addition to a cluster IP, the system picks a port (or the user
+# can specify one), and every node in the cluster then forwards traffic to that port to the service.
+kubectl expose deployment kuard --type=NodePort
+
+# update the service
+kubectl edit service kuard
+
+## load balancer
+# LoadBalancer type builds on NodePorts by additionally configuring the cloud to create a new load balancer 
+# and direct it at nodes in your cluster. LoadBalancer type is specified for cloud integration. When using LoadBalancer type,
+# An external IP is created for the service.
+
+## kube-proxy
+# Cluster IPs are stable virtual IPs that load-balance traffic across all of the endpoints
+# in a service. This magic is performed by a component running on every node in the cluster called the kube-proxy
+
+# kube-proxy watches for new services in the cluster via the API server. It then programs a set of iptables rules in the kernel 
+# of that host to rewrite the destination of packets so they are directed at one of the endpoints for that service.
+# If the set of endpoints for a service changes (due to pods coming and going or due to a failed readiness check) 
+# the set of iptables rules is rewritten.
+
+## Replica Set
+# A ReplicaSet works as a cluster-wide Pod manager, ensuring that the right types and number of Pods are running at all time
+# ReplicaSet reconciliation loop discover the particular set of Pods by template Pod labels.
+# check kuard-replicaset.yml
+
+# describe a replicaset
+kubectl describe rs kuard
+
+# scale out replicaset using kubectl scale
+kubectl scale kuard --selector="env=prod" --replicas=4
+
+# horizontal pod autoscaling (HPA)
+# horizontal pod autoscale means scale out by improving the pod replicaset count. Vertical pod autoscale, on the other hand, 
+# will keep the replicaset count while add memory and cpu source to each pod. Vertical pod autoscale is not supported yet 
+# but it's planned
+# heapster addon must be enabled for hpa
+minikube addons enable heapster
+
+kubectl autoscale rs kuard --min=2 --max=5 --cpu-percent=80
+
+kubectl get hpa

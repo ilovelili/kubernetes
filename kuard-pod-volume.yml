@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kuard
+  labels: # define labels in metadata
+    app: kuard
+spec:
+  volumes: # volume definition
+  - name: kuard-data
+    hostPath:
+      path: /var/lib/kuard # host path (local path)
+  # persist data using remote disks (nfs)
+  # volumes:
+  # - name: "kuard-data"
+  #   nfs:
+  #     server: my.nfs.server.local
+  #     path: "/exports"
+  containers:
+  - image: gcr.io/kuar-demo/kuard-amd64:1
+    name: kuard
+    ports:
+    - containerPort: 8080
+      name: http
+      protocol: TCP
+    livenessProbe:
+      httpGet:
+        path: /healthy
+        port: 8080
+      initialDelaySeconds: 5
+      timeoutSeconds: 1
+      periodSeconds: 10
+      failureThreshold: 3
+    resources:
+      requests:
+        cpu: 500m
+        memory: 128Mi
+      limits:
+        cpu: 1000m
+        memory: 256Mi
+    volumeMounts: 
+    - mountPath: /data # mount path (container path)
+      name: kuard-data

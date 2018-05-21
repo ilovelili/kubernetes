@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1 # https://kubernetes.io/docs/reference/federation/extensions/v1beta1/definitions/
+kind: ReplicaSet
+metadata:
+  name: kuard
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kuard
+        version: "2"
+    spec:
+      containers:
+      - image: gcr.io/kuar-demo/kuard-amd64:2
+        name: kuard
