@@ -1,8 +1,8 @@
 version: '2'
 services:
   service.greeter:
-      build:
-        dockerfile: ./dockerfile
-        context: ./
-      image: greeter-api
+    build:
+      dockerfile: ./dockerfile
+      context: ./
+    image: greeter-api
       

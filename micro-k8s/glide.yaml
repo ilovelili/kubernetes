@@ -6,7 +6,7 @@ import:
 - package: github.com/micro/examples
   subpackages:
   - greeter/srv/proto/hello
-- package: github.com/micro/go-micro  
+- package: github.com/micro/go-micro
   subpackages:
   - client
   - server
