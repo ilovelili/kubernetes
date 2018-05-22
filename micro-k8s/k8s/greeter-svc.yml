@@ -9,4 +9,4 @@ spec:
   - port: 8080
     protocol: TCP
   selector:
-    app: greet
+    app: greeter-api
