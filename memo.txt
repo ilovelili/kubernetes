@@ -88,8 +88,8 @@ kubectl edit service kuard
 # An external IP is created for the service.
 
 ## kube-proxy
-# Cluster IPs are stable virtual IPs that load-balance traffic across all of the endpoints
-# in a service. This magic is performed by a component running on every node in the cluster called the kube-proxy
+# Cluster IPs are stable virtual IPs that load-balance traffic across all of the endpoints in a service. 
+# This magic is performed by a component running on every node in the cluster called the kube-proxy
 
 # kube-proxy watches for new services in the cluster via the API server. It then programs a set of iptables rules in the kernel 
 # of that host to rewrite the destination of packets so they are directed at one of the endpoints for that service.
@@ -117,3 +117,25 @@ minikube addons enable heapster
 kubectl autoscale rs kuard --min=2 --max=5 --cpu-percent=80
 
 kubectl get hpa
+
+## Daemon Set
+ReplicaSets should be used when your application is completely decoupled from the node.
+DaemonSets should be used when a single copy of your application must run on all or a subset of the nodes in the cluster
+
+## log
+kubectl -n test-micro-go logs micro-b55764cb-wk2ts
+
+# setting namespace
+kubectl config set-context $(kubectl config current-context) --namespace=<insert-namespace-name-here>
+# Validate it
+kubectl config view | grep namespace:
+
+# switch context and namespace
+# https://github.com/ahmetb/kubectx
+
+## Jobs
+# Oneshot provides a way to run a single Pod once until successful termination
+# Parallel One or more Pods running one or more times until fixed processing completion count
+
+## Service with and without selector
+https://kubernetes.io/docs/concepts/services-networking/service/#services-without-selectors

@@ -40,3 +40,4 @@ spec:
     volumeMounts: 
     - mountPath: /data # mount path (container path)
       name: kuard-data
+      readOnly: true # readonly or not

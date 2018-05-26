@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: micro
+  labels:    
+    deployment: microapi
 spec:
   replicas: 1
   selector:
@@ -10,18 +12,18 @@ spec:
   template:
     metadata:
       labels:
-        app: micro
+        app: micro        
     spec:
-        containers:
-        - name: micro
-          image: microhq/micro:kubernetes
-          args:
-            - "api"
-            - "--handler=rpc"
-            - "--namespace=default"
-          env:
-          - name: MICRO_API_ADDRESS
-            value: ":80"
-          ports:
-          - containerPort: 80
-            name: api-port
+      containers:
+      - name: micro
+        image: microhq/micro:kubernetes
+        args:
+          - "api"
+          - "--handler=rpc"
+          - "--namespace=default"
+        env:
+        - name: MICRO_API_ADDRESS
+          value: ":80"
+        ports:
+        - containerPort: 80
+          name: api-port

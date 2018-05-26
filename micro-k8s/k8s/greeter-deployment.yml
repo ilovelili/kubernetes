@@ -1,25 +1,27 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: greeter-api
+  name: greeter
+  labels:
+    deployment: greeter
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: greeter-api
+      app: greeter
   template:
     metadata:
       labels:
-        app: greeter-api
+        app: greeter        
     spec:
-        containers:
-        - name: greeter-api-service
-          image: ilovelili/greeter-api:latest
-          command: [
-            "./micro-k8s",
-            "--selector=static", # The static selector offloads load balancing to k8s services
-            "--server_address=:8080",
-          ]
-          ports:
-          - containerPort: 8080
-            name: greet-port
+      containers:
+      - name: greeter
+        image: ilovelili/greeter-api:latest
+        command: [
+          "./micro-k8s",
+          "--selector=static", # The static selector offloads load balancing to k8s services
+          "--server_address=:8080",
+        ]
+        ports:
+        - containerPort: 8080
+          name: greet-port
