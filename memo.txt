@@ -139,3 +139,17 @@ kubectl config view | grep namespace:
 
 ## Service with and without selector
 https://kubernetes.io/docs/concepts/services-networking/service/#services-without-selectors
+
+## kubectl logs by pod
+pods=$(kubectl get pods --output=jsonpath={.items..metadata.name})
+echo $pods
+kubectl logs $pods
+
+## plugin
+https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/
+# the plugin name must be *.yaml instead of *.yml...
+
+# curl -H "content-type: application/json" -X POST 10.27.246.156:30496/greeter-api/say/hello
+
+## deployments
+ReplicaSets manage Pods, Deployments manage ReplicaSets

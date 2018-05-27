@@ -17,13 +17,17 @@ spec:
       containers:
       - name: micro
         image: microhq/micro:kubernetes
-        args:
-          - "api"
-          - "--handler=rpc"
-          - "--namespace=default"
+        command: [
+          "/micro",
+          "api",
+        ]
         env:
         - name: MICRO_API_ADDRESS
           value: ":80"
+        - name: MICRO_ENABLE_STATS
+          value: "true"
+        - name: MICRO_API_NAMESPACE
+          value: "greeter"
         ports:
         - containerPort: 80
           name: api-port

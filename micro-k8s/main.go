@@ -22,7 +22,7 @@ func (s *Say) Hello(ctx context.Context, req *hello.Request, rsp *hello.Response
 
 func main() {
 	service := k8s.NewService(
-		micro.Name("default.greeter-api"),
+		micro.Name("greeter"),
 	)
 
 	service.Init()

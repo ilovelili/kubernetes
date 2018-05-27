@@ -5,8 +5,8 @@ metadata:
   labels:
     service: microapi    
 spec:
-  # type: LoadBalancer
-  type: NodePort
+  type: LoadBalancer
+  # type: NodePort
   ports:
   - name: api-http
     port: 80
