@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: greeter
+  labels:
+    deployment: greeter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: greeter
+  template:
+    metadata:
+      labels:
+        app: greeter        
+    spec:
+      containers:
+      - name: greeter
+        image: ilovelili/greeter-consul:0.3
+        command: [
+          "./micro-consul",
+          "--server_address=:8080",
+        ]
+        ports:
+        - containerPort: 8080
+          name: greet-port

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro
+  labels:    
+    deployment: microapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: micro
+  template:
+    metadata:
+      labels:
+        app: micro        
+    spec:
+      containers:
+      - name: micro
+        image: microhq/micro
+        command: [
+          "/micro",
+          "api",
+        ]
+        env:
+        - name: MICRO_API_ADDRESS
+          value: ":80"
+        - name: MICRO_REGISTRY
+          value: "consul"
+        - name: MICRO_REGISTRY_ADDRESS
+          value: "35.234.41.252:8500"
+        - name: MICRO_API_NAMESPACE
+          value: "go.micro.api"
+        - name: MICRO_API_HANDLER
+          value: "rpc"
+        ports:
+        - containerPort: 80
+          name: api-port

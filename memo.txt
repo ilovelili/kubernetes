@@ -153,3 +153,20 @@ https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/
 
 ## deployments
 ReplicaSets manage Pods, Deployments manage ReplicaSets
+
+# scale deployment
+kubectl scale deployments nginx --replicas=2
+
+# even if we scale the replicaset managed by the deployment, the replicas will be forced to match the deployment replicas 
+# since k8s is a self healing system
+kubectl scale replicasets nginx-1128242161 --replicas=1 # still the replicas is 2
+
+# delete deployment without deleting the replicaset and pods:
+kubectl delete deployments nginx
+# delete deployment meanwhile delete the replicaset and pods:
+kubectl delete deployments nginx --cascade=true
+
+
+
+
+# curl -X POST -H "content-type: application/json" -d "{}" localhost:80/greeter/say/hello
