@@ -5,7 +5,7 @@ metadata:
   name: consul
 spec:
   # http://www.devoperandi.com/cluster-consul-using-kubernetes-api/
-  replicas: 1
+  replicas: 1 # need to figure out how to replication
   selector:
     matchLabels:
       app: consul

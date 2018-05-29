@@ -5,7 +5,7 @@ metadata:
   labels:
     deployment: greeter
 spec:
-  replicas: 1
+  replicas: 1 # 2 will be ok
   selector:
     matchLabels:
       app: greeter
