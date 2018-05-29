@@ -23,7 +23,7 @@ services:
       build:
         dockerfile: ./dockerfile
         context: ./
-      image: greeter-consul:0.2
+      image: greeter-consul:0.4
       environment:
         - MICRO_REGISTRY=consul
         - MICRO_REGISTRY_ADDRESS=consul:8500

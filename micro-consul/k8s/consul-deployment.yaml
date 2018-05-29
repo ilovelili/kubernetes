@@ -1,9 +1,10 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  namespace: kube-system
+  namespace: default
   name: consul
 spec:
+  # http://www.devoperandi.com/cluster-consul-using-kubernetes-api/
   replicas: 1
   selector:
     matchLabels:
@@ -15,8 +16,7 @@ spec:
     spec:
       containers:
         - name: consul
-          # command: [ "/bin/start", "-server", "-bootstrap-expect", "3"] // why it fails...
-          command: [ "/bin/start", "-server", "-bootstrap"]          
+          command: [ "/bin/start", "-server", "-bootstrap"] 
           image: progrium/consul:latest
           imagePullPolicy: Always
           ports:

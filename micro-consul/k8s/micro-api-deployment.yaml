@@ -27,7 +27,8 @@ spec:
         - name: MICRO_REGISTRY
           value: "consul"
         - name: MICRO_REGISTRY_ADDRESS
-          value: "35.234.41.252:8500"
+          # value: "172.28.25.43:8500"
+          value: "svc-consul:8500"
         - name: MICRO_API_NAMESPACE
           value: "go.micro.api"
         - name: MICRO_API_HANDLER

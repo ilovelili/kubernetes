@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: greeter
-        image: ilovelili/greeter-consul:0.3
+        image: ilovelili/greeter-consul:0.6
         command: [
           "./micro-consul",
           "--server_address=:8080",
