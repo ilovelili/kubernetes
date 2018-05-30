@@ -5,8 +5,10 @@ metadata:
   labels:    
     service: greeter
 spec:
+  clusterIP: None
   ports:
-  - port: 8080
-    protocol: TCP
+  - name: headless
+    port: 55555
+    targetPort: 0
   selector:
     app: greeter
