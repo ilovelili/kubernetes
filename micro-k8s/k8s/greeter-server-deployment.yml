@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: greeter-svc
+  labels:
+    deployment: greeter-svc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: greeter-svc
+  template:
+    metadata:
+      labels:
+        app: greeter-svc        
+    spec:
+      containers:
+      - name: greeter-svc
+        image: ilovelili/greeter-k8s-server:0.1
+        imagePullPolicy: Always
+        command: [
+          "./server",
+        ]
+        env:        
+        - name: MICRO_REGISTRY
+          value: "kubernetes"

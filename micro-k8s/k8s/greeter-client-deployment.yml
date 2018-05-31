@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: greeter-cli
+  labels:
+    deployment: greeter-cli
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: greeter-cli
+  template:
+    metadata:
+      labels:
+        app: greeter-cli        
+    spec:
+      containers:
+      - name: greeter-cli
+        image: ilovelili/greeter-k8s-client:0.1
+        imagePullPolicy: Always
+        command: [
+          "./api",
+        ]
+        env:        
+        - name: MICRO_REGISTRY
+          value: "kubernetes"

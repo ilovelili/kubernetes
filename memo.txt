@@ -167,6 +167,21 @@ kubectl delete deployments nginx
 kubectl delete deployments nginx --cascade=true
 
 
+# curl -X POST -H "content-type: application/json" -d "{}" 35.201.155.124:80/greeter/say/hello
+
+# Ingress
+# Traditionally, you would create a LoadBalancer service for each public system you want to expose. This can get rather expensive. 
+# Ingress gives you a way to route requests to services based on the request host or path, centralizing a number of services into a single entrypoint.
+
+    internet
+        |
+  ------------
+  [ Services ]
 
 
-# curl -X POST -H "content-type: application/json" -d "{}" localhost:80/greeter/say/hello
+    internet
+        |
+   [ Ingress ]
+   --|-----|--
+   [ Services ]
+

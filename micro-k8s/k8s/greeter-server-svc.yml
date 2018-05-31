@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: greeter-svc
+  labels:    
+    service: greeter-svc
+spec:
+  clusterIP: None
+  ports:
+  - name: headless
+    port: 55554
+    targetPort: 0
+  selector:
+    app: greeter-svc

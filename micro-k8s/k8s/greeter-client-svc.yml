@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: greeter-cli
+  labels:    
+    service: greeter-cli
+spec:
+  clusterIP: None
+  ports:
+  - name: headless
+    port: 55555
+    targetPort: 0
+  selector:
+    app: greeter-cli

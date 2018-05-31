@@ -1,0 +1,21 @@
+package: github.com/ilovelili/micro-k8s/api
+import:
+- package: github.com/golang/protobuf  
+  subpackages:
+  - proto
+- package: github.com/micro/examples
+  subpackages:
+  - greeter/srv/proto/hello
+- package: github.com/micro/go-micro
+  subpackages:
+  - client
+  - server
+- package: github.com/micro/go-web
+- package: github.com/emicklei/go-restful
+- package: github.com/micro/kubernetes  
+  subpackages:
+  - go/micro
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: google.golang.org/grpc

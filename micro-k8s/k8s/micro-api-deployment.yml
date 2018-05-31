@@ -16,18 +16,20 @@ spec:
     spec:
       containers:
       - name: micro
-        image: microhq/micro:kubernetes
+        image: microhq/micro
         command: [
           "/micro",
           "api",
         ]
         env:
         - name: MICRO_API_ADDRESS
-          value: ":80"
-        - name: MICRO_ENABLE_STATS
-          value: "true"
-        - name: MICRO_API_NAMESPACE
-          value: "greeter"
+          value: ":80"        
+        - name: MICRO_API_NAMESPACE          
+          value: client
+        # - name: MICRO_REGISTRY
+        #   value: kubernetes
+        - name: MICRO_API_HANDLER
+          value: proxy
         ports:
         - containerPort: 80
           name: api-port
