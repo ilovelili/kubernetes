@@ -5,10 +5,11 @@ metadata:
   labels:    
     service: greeter-cli
 spec:
-  clusterIP: None
+  type: LoadBalancer
   ports:
-  - name: headless
-    port: 55555
-    targetPort: 0
+  - name: api-port
+    port: 8080
+    targetPort: "api-port"
+    protocol: TCP
   selector:
     app: greeter-cli
